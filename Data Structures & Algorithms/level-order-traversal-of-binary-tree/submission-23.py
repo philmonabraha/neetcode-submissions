@@ -6,40 +6,31 @@
 #         self.right = right
 
 class Solution:
-    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
 
-
-        #do level order traversal for each level take the right most element
-
-        if not root:
+        if root is None:
             return []
-
+        
         queue = deque()
-
         queue.append(root)
+
         result = []
 
-        while len(queue) > 0:
+        while len(queue) != 0:
 
             level = []
-
             for i in range(len(queue)):
-
                 item = queue.popleft()
-
+                level.append(item.val)
                 if item.left:
                     queue.append(item.left)
                 if item.right:
                     queue.append(item.right)
+            
+            result.append(level)
                 
-                level.append(item.val)
-            
-            result.append(level[-1])
-        
+
         return result
-
-        
-            
             
 
-        
+

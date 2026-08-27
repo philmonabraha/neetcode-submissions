@@ -9,21 +9,30 @@ class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
 
 
+        elements = []
 
-        returnitem = []
-        def dfs(curr):
+        stack = []
+        stack.append(root)
 
-            nonlocal returnitem
+        while stack:
 
-            if not curr:
-                return
+            element = stack.pop()
             
-            dfs(curr.left)
-            returnitem.append(curr.val)
-            dfs(curr.right)
+            if element.left:
+                stack.append(element.left)
+            
+            if element.right:
+                stack.append(element.right)
 
-        dfs(root)
+            elements.append(element.val)
 
-        return returnitem[k+1]
+        
+        elements.sort()
+
+        return elements[k-1]
+
+
+            
+
 
         

@@ -1,29 +1,27 @@
 class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
 
+        
+        
+        cars = list(zip(position, speed))
+        cars.sort(reverse=True)
 
-        pair = []
+        stack = []
 
-        for i in range(len(position)):
-            pair.append([position[i], speed[i]])
+        for pos, spd in cars:
 
-        pair.sort()
+            time = (target - pos ) / spd
 
-        fleet = 0
-        current = []
+            stack.append(time)
 
-        for item in pair:
+            if len(stack) >= 2 and stack[-1] <= stack[-2]:
+                stack.pop()
 
-            distance = item[0]
-            s = item[1]
-            timetoreach = (target - distance)/s
+        return len(stack)
 
-            if len(current) == 0 or timetoreach > current[-1]:
-                current.append(timetoreach)
 
-        return len(current)
 
-            
+
 
 
         

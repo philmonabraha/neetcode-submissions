@@ -1,20 +1,23 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
 
-        maxsofar = 0
-
-        left, right = 0, 1
 
 
-        while right < len(prices) - 1:
+        pointer1 = 0
+        pointer2 = 0
 
+        maxprofit = 0
 
-            while price[left] < price[right]:
-                maxsofar = max(maxsofar, price[right]-price[left])
-                right += 1
-
-            left += 1
+        while pointer2 < len(prices):
             
+            current_profit = prices[pointer2] - prices[pointer1]
 
-        
+            maxprofit = max(maxprofit, current_profit)
+
+            if prices[pointer2] < prices[pointer1]:
+                pointer1 = pointer2
+            
+            pointer2 += 1
+
+        return maxprofit
         

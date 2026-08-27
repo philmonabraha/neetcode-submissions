@@ -1,50 +1,32 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
 
-        if len(s1) > len(s2):
-            return False
 
-        
-        dictionary = {}
+        left = 0
+        right = left + len(s1) - 1 
 
-        for i in s1:
-            if i in dictionary:
-                dictionary[i] += 1
-            else:
-                dictionary[i] = 1
-
-        left, right = 0, 0
-
-        dictionary2 = {}
 
         while right < len(s2):
 
-            while right - left < len(s1):
-                
-                if s2[right] in dictionary2:
-                    dictionary2[s2[right]] += 1
-                else:
-                    dictionary2[s2[right]] = 1
 
-                if dictionary == dictionary2:
-                    return True
+            substring = s2 [left : right+1]
+            s1_copy = s1
+            s1_copy = sorted(s1)
 
-                right += 1
-     
+            substring = sorted(substring)
 
-            dictionary2[s2[left]] -= 1           
-            if dictionary2[s2[left]] == 0:
-                del dictionary2[s2[left]] 
-            left += 1     
+            s1_copy = "".join(s1_copy)
+            substring = "".join(substring)
 
+            if s1_copy == substring:
+                return True
+
+            right += 1 
+            left += 1
+        
         return False
-            
-
-
-
 
         
 
-            
-
+    
         
