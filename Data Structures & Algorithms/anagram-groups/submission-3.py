@@ -1,23 +1,19 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
 
-        map1 = {}
+
+        hashmap = {}
 
         for word in strs:
 
-
-            if "".join(sorted(word)) in map1:
-
-                map1["".join(sorted(word))].append(word)
+            if tuple(sorted(word)) in hashmap:
+                hashmap[tuple(sorted(word))].append(word)
             else:
-
-                map1["".join(sorted(word))] = [word]
+                hashmap[tuple(sorted(word))] = []
+                hashmap[tuple(sorted(word))].append(word)
         
-        output = []
 
-        for key, value in map1.items():
+        return list(hashmap.values())
 
-            output.append(value)
 
-        return output
         
