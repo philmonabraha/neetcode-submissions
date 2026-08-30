@@ -1,32 +1,39 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
 
-        left, right = 0, 0
-        dictionary = {}
-        res = 0
-        maxfreq = 0
+        hashmap = {}
+        
+        right = 0
+        left = 0
+
 
         while right < len(s):
 
-            if s[right] in dictionary:
-                dictionary[s[right]] +=1
+            while (right - left + 1) - max(count.values()) > k:
+                
+                hashmap[left] -= 1
+                left += 1
+                
+            
+            if s[right] in hashmap:
+                hashmap[s[right]] += 1
             else:
-                dictionary[s[right]] = 1
+                hashmap[s[right]] = 1
 
-            maxfreq = max(maxfreq, dictionary[s[right]])
-               
-            while right - left + 1 - maxfreq > k:
-
-                dictionary[s[left]] -=1
-                left += 1     
-
-            res = max(res, right - left + 1)
+            maxlength = max(maxlength, right - left + 1)
             right += 1
 
+        
+        return maxlength
+            
 
-        return res
-
-
-
+            
 
         
+
+
+
+
+
+
+

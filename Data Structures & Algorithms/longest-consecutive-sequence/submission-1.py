@@ -1,29 +1,42 @@
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
 
+        hashmap = {}
 
-
-        hash1 = {}
-        setofnums = set(nums)
-
-        maxsofar = 0
-
-        for num in nums:
-            m = 1
-
-            if num - 1 not in setofnums:
-
-                temp = num
-
-                while temp + 1 in setofnums:
-                    m += 1
-                    temp+=1
-
-                if m > maxsofar:
-                    maxsofar = m
-
+        longestsofar = 0
         
-        return maxsofar
+        for num in nums:
+
+            if num not in hashmap or num - 1 not in hashmap or num + 1:
+                hashmap[num] = [num]
+
+            elif num - 1 in hashmap:
+                
+                hashmap[num-1] = max(hashmap[nums-1], hashmap[nums], key=len) + [num]
+                hashmap[num] = hashmap[num-1]
+
+                if longestsofar < len(hashmap[num-1]):
+                    longestsofar = len(hashmap[num-1])
+
+            elif num + 1 in hashmap:
+                
+                hashmap[num+1] = max(hashmap[nums+1], hashmap[nums], key=len) + [num]
+                hashmap[num] = hashmap[num+1]
+
+                if longestsofar < len(hashmap[num+1]):
+                    longestsofar = len(hashmap[num+1])
+
+            
+            
+
+  
+
+
+
+
+
+
+            
 
 
         

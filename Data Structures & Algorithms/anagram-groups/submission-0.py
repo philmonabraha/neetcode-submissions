@@ -1,22 +1,22 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
 
-        map1 = {}
+
+        hashmap = {}
 
         for word in strs:
 
-            if sorted(word) in map1:
-
-                map1[sorted(word)].append(word)
+            if sorted(word) in hashmap:
+                hashmap[sorted(word)].add(word)
             else:
-
-                map1[sorted(word)] = word
+                hashmap[sorted(word)] = set()
+                hashmap[sorted(word)].add(word)
         
         output = []
-
-        for key, value in map1.items():
-
-            output.append(value)
-
+        for val in hashmap.values():
+            output.append(list(val))
+        
         return output
+        
+
         

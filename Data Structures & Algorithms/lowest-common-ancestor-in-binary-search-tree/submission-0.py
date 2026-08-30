@@ -8,19 +8,56 @@
 class Solution:
     def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
 
+        lowestroot = root
 
-        while root:
+        firstpointer = root
+        secondpointer = root
 
-            if root.val <= p.val and root.val <= q.val:
-                root = root.right
+        list1 = []
+        list2 = []
 
-            elif root.val >= p.val and root.val >= q.val:
-                root = root.left
-            
+        while (firstpointer != q):
+
+            list2.append(firstpointer.val)
+
+            if (q.val < firstpointer.val):
+                firstpointer = firstpointer.left
             else:
-                return root
+                firstpointer = firstpointer.right        
+
+        while (secondpointer != p):
+
+            list1.append(secondpointer.val)
+
+            if (p.val < secondpointer.val):
+                secondpointer = secondpointer.left
+            else:
+                secondpointer = secondpointer.right
+
+        list1set = set(list1)
+        LCA = root.val
+
+        for i in list2.sort():
+            if i in list1set:
+                LCA = i
+                break
+        
+        thirdpointer = root
+
+        while (thirdpointer.val != LCA):
+            if (LCA < thirdpointer.val):
+                thirdpointer = thirdpointer.left
+            else:
+                thirdpointer = thirdpointer.right
+
+        return thirdpointer
+
 
 
         
+            
+
+
+
         
         

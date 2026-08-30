@@ -1,25 +1,39 @@
 class Solution:
+
     def encode(self, strs: List[str]) -> str:
-        output = []
-        for st in strs:
-            output.append(str(len(st)) + "#" + st)
-        return "".join(output)
+
+        output = ""
+
+        for i in strs:
+
+            output = output + str(len(i)) + i  
+       
+        return output 
+
 
     def decode(self, s: str) -> List[str]:
+
         output = []
-        i = 0
 
-        while i < len(s):
-            j = i
-            while s[j] != "#":
-                j += 1
+        tracker = 0
 
-            length = int(s[i:j])
-            j += 1  # skip '#'
-            output.append(s[j:j + length])
-            i = j + length
+        while tracker <= len(s):
+
+            index = s[tracker]
+            x = int(index)
+            start = tracker+1
+            word = s[start:x]
+
+            tracker = tracker + x 
+
 
         return output
+
+
+    
+
+        
+
 
 
 

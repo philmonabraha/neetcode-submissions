@@ -1,49 +1,52 @@
+
+
 class Solution:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
 
-        visited = set()
+        rows, cols = len(grid), len(grid[0])
 
-        output = 0
+        visit = set()
+        maxsofar = 0
 
-        def dfs(x,y):
+        def bfs(r, c):
 
-            nonlocal output
+            directions = [[1,0], [-1, 0], [0, 1], [0, -1]]
 
-            curr = 0
+            queue = collections.deque()
 
-            #implement traversal
+            visit.add((r,c))
+            queue.append((r,c))
 
-            direction = [[0, 1], [1, 0], [-1, 0], [0, -1]]
+            count = 1
 
-            stack = [(x, y)]
+            while q:
 
-            while stack:
-
-                node = stack.pop()
-                curr += 1
+                i, j = q.popleft()
                 
-                for i, j in direction:
-                    x_val = i + node[0]
-                    y_val = j + node[1]
+                for d in directions:
 
-                    if x_val in range(len(grid)) and y_val in range(len(grid[0])) and (x_val,y_val) not in visited and grid[x_val][y_val] == 1:
-                        visited.add((x_val,y_val))
-                        stack.append((x_val,y_val))
+                    x, y = i+d[0], j+d[1]
 
-            output = max(output, curr)
+                    if x in range(rows) and y in range(cols) and (x,y) not in visit and grid[x,y] == 1:
 
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
-                if grid[i][j] == 1 and (i,j) not in visited:
-                    visited.add((i,j))
-                    dfs(i,j)
+                        visit.add((x,y))
+                        q.append((x,y))
+                        count += 1
+
+            
+            if count > maxsofar:
+                maxsofar = count
+
                     
 
-        return output
-                         
+
+        for r in rows:
+
+            for c in cols:
+
+                if grids[r][c] == 1 and (r,c) not in visit:
+
+                    bfs(r, c)
 
 
-
-
-        
         

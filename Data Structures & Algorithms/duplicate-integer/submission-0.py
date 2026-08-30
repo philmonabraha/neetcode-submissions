@@ -1,16 +1,16 @@
 class Solution:
     def hasDuplicate(self, nums: List[int]) -> bool:
 
+        hashset = set()
 
-        seen = set()
+        for i in nums:
 
+            if i in hashset:
+                return False
+            else:
+                hashset.add(i)
 
-        for num in nums:
+        return True
 
-            if num in seen:
-                return True
-            
-            seen.add(num)
-
-        return False
+        
         

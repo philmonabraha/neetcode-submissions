@@ -7,17 +7,19 @@
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
 
-        p1, p2 = head, head
+        if not head.next:
+            return True
 
-        while p1 != None and p2 != None:
+        slow = head
+        fast = head.next
 
-            p1 = p1.next
-            p2 = p2.next.next
+        while slow.next and fast.next:
 
-            if p1 == p2:
+            if slow == fast:
                 return True
+            
+            slow = slow.next
+            fast = fast.next.next
 
         return False
-
-
         

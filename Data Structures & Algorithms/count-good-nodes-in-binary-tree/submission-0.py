@@ -8,23 +8,27 @@
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
 
-       
-        def dfs(curr, mx):
 
-            if not curr:
-                return 0
+        if not root:
+            return 0
 
-            if curr.val >= mx:
-                res = 1
-            else:
-                res = 0
+        count = 0
+
+        stack = []
+        stack.append((root, root.val))
+
+        while len(stack) > 0:
+
+            item, maxval = stack.pop()
+
+            if item.val >= maxval:
+                count += 1
             
-            maxsofar = max(mx, curr.val)
-            
-            res += dfs(curr.left, maxsofar)
-            res += dfs(curr.right, maxsofar)
-            
-            return res
+            maximum = max(maxval, maximum)
+
+            if item.right:
+                stack.append(item.right, maximum)
+            if item.left:
+                stack.append(item.left, maximum)
         
-        return dfs(root, root.val)
-        
+        return count

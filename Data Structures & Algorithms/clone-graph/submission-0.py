@@ -9,26 +9,38 @@ class Node:
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
 
-        if not node:
-            return None
-       
-        queue1 = deque([node])
-        root = Node(node.val)
-        queue2 = deque([root])
 
-        while queue1:
+        deepcopy = Node()
 
-            curr = queue1.popleft()
-            copy = queue2.popleft()
+        queue = deque()
+        queue.append(node)
 
-            for x in curr.neighbors:
+        visited = {}
+        visited[node] = Node(node.val) 
+        
+        while queue:
 
-                queue.append(x)
-                x_copy = Node(x.val)
-                copy.neighbors.append(x_copy)
-                queue2.append(x_copy)
+            current = queue.popleft()
 
-        return root
+            for neighbor in current.neighbors:
+
+                if neighbor not in visited:
+                    visited[neighbor] = Node(neighbor.val)
+                    queue.append(neighbor)
+
+                visited[current].neighbors.append(visited[neighbor])
+
+            
+        return visited[node]
+                
+
+
+
+
+
+
+                    
+
 
 
 

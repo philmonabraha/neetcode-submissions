@@ -1,45 +1,49 @@
 import heapq
-import math
 
 class Solution:
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
 
+        dictionary = {}
         heap = []
 
-        distance = {}
-
-        for point in points:
-
-            x = point[0]
-            y = point[1]
-
-            d = math.sqrt(x**2 + y**2)
+        #heapifying and hashtabling 
+        for i in points:
+            distance = (i[0]**2 + i[1]**2) ** 0.5
             
-            if d in distance:
-                distance[d].append([x,y])
+            heapq.heappush(heap, distance)
+
+            if distance not in dictionary:
+                dictionary[distance] = [i]
             else:
-                distance[d] = [x,y]
-                heapq.heappush(heap, d)
-        
+                dictionary[distance] = dictionary[distance] + [i]
+
         result = []
-      
-        while k > 0:
-            
-            current = heapq.heappop(heap)
-            
-            for i in len(distance[current]):
-                if k < 1:
-                    break
-                
-                result.append(i)
-                k -=1 
+
+        i = 0
+
+        while i < k:
+
+            d = heapq.heappop(heap)
+
+            if dictionary[len(d)] > 1:
+                j = 0
+                while i < k and j < len(d):
+                    result.append(d[i])
+
+            else:
+                result.append(d[0])
 
         return result
 
 
+
+
+
+
+
+
         
-
-
+        
 
 
 

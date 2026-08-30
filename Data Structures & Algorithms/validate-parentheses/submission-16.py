@@ -1,0 +1,31 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+
+        stack1 = deque()
+
+        pointer1 = 0
+        pointer2 = len(s) - 1
+        
+        while (pointer1 <= pointer2):
+            
+            stack1.append(s[pointer1]) 
+
+            item1 = s[pointer1]
+
+            if item1 == ")":
+                stack1.pop()
+                if stack1.pop() != "(":
+                    return False
+            elif item1 == "}":
+                stack1.pop()
+                if stack1.pop() != "{":
+                    return False
+            elif item1 == "]":
+                stack1.pop()
+                if stack1.pop() != "[":
+                    return False
+
+            pointer1 += 1
+
+        return True
+        

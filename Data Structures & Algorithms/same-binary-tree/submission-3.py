@@ -8,39 +8,27 @@
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
 
+        def helpertraversal(list1, root):
 
-        if not p and q:
-            return False
-        if not q and p:
-            return False
-        if not p and not q:
-            return True
+            if root is None:
+                return [None]
+            
+            list1.append(root.val)
+
+            helpertraversal(list1, root.left)
+            helpertraversal(list1, root.right)    
+            return list1
 
         
-        queue1 = deque([p])
-        queue2 = deque([q])
+        queue1 = helpertraversal([], p)
+        queue2 = helpertraversal([], q)
 
-        while queue1 or queue2:
-
-            for i in range(max(len(queue1), len(queue2))):
-
-                node = queue1.popleft()
-                if len(queue2) == 0 or len(queue1) == 0:
-                    return False
-                node2 = queue2.popleft()
-                if node.val != node2.val:
-                    return False
-
-                if node.left:
-                    queue1.append(node.left)
-                if node.right:
-                    queue1.append(node.right)
-
-                if node2.left:
-                    queue2.append(node2.left)
-                if node2.right:
-                    queue2.append(node2.right)
-                
+        if len(queue1) != len(queue2):
+            return False
+        
+        for i in range(len(queue1)):
+            if (queue1[i] != queue2[i]):
+                return False
+            
         return True
 
-        

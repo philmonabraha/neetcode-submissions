@@ -1,24 +1,19 @@
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
 
+        stack = []
+        resultarray = [0 for i in range(len(temperatures))]
 
-        result = []
-
-        unsolved = []
-
-
-        for i in len(temperatures):
-
-            while unsolved and temperatures[i] > unsolved[-1]:
-
-                x = unsolved.pop()
-                result.append(i - x)
-
-            unsolved.append(i)
-
-        return result
-
+        for i in range(len(temperatures)):
             
+            while (len(stack) != 0 and temperature[i] > temperature(stack[-1])):
 
-        
+                resultarrray[stack[-1]] = i - stack[-1]
+                stack.pop()
+
+            stack.append(i)
+
+        return resultarray
+
+
         

@@ -1,40 +1,59 @@
 class Solution:
     def islandsAndTreasure(self, grid: List[List[int]]) -> None:
 
+        visited = set()
+
+        rows, cols = len(grid), len(grid[0])
+
+        #temp min distance found
+
+        temp = grid.copy()
+
         
-
-        def bfs(x, y):
-
-            directions = [[1, 0], [-1, 0], [0,1], [0, -1]]
-
-            visited = set()
-            visited.add((x,y))
+        def bfs(r, c):
 
 
-            queue = deque([(x,y)])
+            queue = collections.deque()
 
-            distance = 1
+            queue.append((r,c))
+
+            directions = [[1,0], [-1,0], [0,1], [0,-1]]
 
             while queue:
 
-                for l in range(len(queue)):
-                    node = queue.popleft()
-                    for direc in directions:
-                        i, j = node[0] + direc[0], node[1] +direc[1]     
+                curr_x, curr_y = queue.popleft()
 
-                        if i in range(len(grid)) and j in range(len(grid[0])) and grid[i][j] != 0 and grid[i][j] != -1 and (i, j) not in visited:
-                            visited.add((i,j))
-                            grid[i][j] = min(distance, grid[i][j])
+                for d in directions:
+
+                    i, j = curr_x + d[0], curr_y + d[1]
+
+                    if i in range(rows) and j in range(cols):
+                         
+                        if grid[i][j] == 2147483647 and (i, j) not in visited:
+
                             queue.append((i,j))
+                            visited.add((i,j))
+                        
+                        ## immediate available treasure
+                        elif grid[i][j] == 0:
 
-                distance += 1
-              
-        for i in range(len(grid)):
+                            grid[curr_x][curr_y] = 1
 
-            for j in range(len(grid[0])):
+                        elif grid[curr_x][curr_y] > 0 and grid[i][j] < grid[curr_x][curr_y]:
 
-                if grid[i][j] == 0:
-                    bfs(i, j)
+                            grid[curr_x][curr_y] = grid[i][j] + 1
+
+        for r in range(rows):
+
+            for c in range(cols):
+
+                if grid[r][c] == 2147483647 and (r,c) not in visited:
+
+                    bfs(r,c)
 
 
+
+
+
+        
         

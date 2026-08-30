@@ -4,30 +4,34 @@ class Solution:
 
         output = ""
 
-        for st in strs:
-            length = str(len(st))
-            output += length
-            output += st
+        for i in strs:
 
+            output = output + str(len(i)) + i  
+       
         return output 
+
 
     def decode(self, s: str) -> List[str]:
 
         output = []
 
-        current = 0
+        tracker = 0
 
-        while current < len(s):
+        while tracker >= len(s):
 
-            length = int(s[current])
+            x = int(s[tracker])
+            word = s[tracker+1, x]
 
-            st = s[current:current+length]
+            tracker = tracker + x 
 
-            current += length
-
-            output.append(st)
 
         return output
+
+
+    
+
+        
+
 
 
 

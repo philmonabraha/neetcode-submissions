@@ -1,44 +1,34 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
 
+        marked = [False for i in nums]
 
-        added = set()
-
-        hash1 = []
+        hashmap = {}
 
         result = []
 
-        for i in range(len(nums)):           
-            hash1.append([nums[i], i])
+        for i in range(len(nums)):
 
-        hash1.sort()
+            if nums[i] not in hashmap:
+                nums[i] = [i]
+            else:
+                nums[i] = nums[i] + [i]
 
-        for i in range(len(hash1)):
+        for i in range(len(nums)):
 
-            left = i + 1
-            right = len(nums)
+            for j in range(len(nums)):
 
-            while left < right:
+                if 0 - nums[i] + nums[j] in hashmap:
+               
+                    index = hashmap[0 - nums[i] + nums[j]].pop()
 
-                num1 = hash1[left][0]
-                num2 = hash1[right][0]
-                num3 = hash1[i][0]
+                    if marked[i] == False and marked[j] == False and marked[index] == False:
+                        result.append([index, i, j])
+                        marked[i] == True
+                        marked[j] == True
+                        marked[index] == True
 
-                if abs(num1+num2) > abs(num3):
-                    right = right - 1
-                elif abs(num1+num2) > abs(num3):
-                    left = left + 1
-                elif abs(num1+num2) == abs(num3):
-                    result.append([i, left, right])
 
-        
         return result
-
-
-
-
-
-
-
-
+        
         

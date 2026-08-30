@@ -1,22 +1,18 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
 
+        if nums[midpoint] == target:
+            return midpoint
+        elif nums[midpoint] < target:
+            return search(nums[midpoint+1:])
+        else:
+            return search(nums[:midpoint])
 
-        left = 0
-        right = len(nums) - 1
-        mid = (right - left ) /2
 
 
-        while left < right:
+        return -1;
 
-            if nums[mid] == target:
-                return mid
-            elif nums[mid] < target:
-                left = mid + 1
-            else:
-                right = mid - 1
         
-        return -1
-
+        
 
         

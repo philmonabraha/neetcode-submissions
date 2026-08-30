@@ -1,37 +1,48 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
 
-        left, right = 0, 1
+        hashmap = {}
 
-        dictionary = {}
-        dictionary[s[left]] = 1
+        for letter in s:
 
-        res = 0
+            if letter not in hashmap:
+                hashmap[letter] = 1
+            else:
+                hashmap[letter] += 1
+
+        original = k
+        
+        right = 0
+        left = 0
+        maxlength = 0
 
         while right < len(s):
-               
-            while k > 0 and right < len(s):
 
-                if s[right] in dictionary:
-                    dictionary[s[right]] +=1
-                else:
-                    dictionary[s[right]] = 1
-
-                if s[right] != s[left]:
-                    k -= 1
+            while s[right] != s[left]:
                 
-                right += 1
+                if k > 0:
+                    k -= 1
+                    s = s[:right] + s[left] + s[right+1:]
 
-            res = max(res, right - left + 1)
+                else:
 
-            if s[left] <= s[right]:
-                k += 1
-
-            left += 1
-
-        return res
-
-
-
+                    k = original
+                    left = right
+            
+            maxlength = max(maxlength, r - l + 1)
+            right += 1
 
         
+        return maxlength
+            
+
+            
+
+        
+
+
+
+
+
+
+

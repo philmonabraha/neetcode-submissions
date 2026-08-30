@@ -1,17 +1,20 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
 
-        left = 0
-        right = len(numbers) - 1
+        pointer1 = 0
+        pointer2 = len(numbers) - 1
 
-        while left < right:
+        while (pointer1 < pointer2):
 
-            if numbers[left] + numbers[right] > target:
-                right -=1
-            elif numbers[left] + numbers[right] < target:
-                left += 1
+            if nums[pointer1] + nums[pointer2] == target:
+                return [pointer1, pointer2]
+
+            if nums[pointer2] > target:
+                pointer2 -= 1
+            
             else:
-                return [left+1, right+1]
+
+                pointer1 += 1
 
 
 

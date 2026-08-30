@@ -6,33 +6,36 @@
 
 class Solution:
     def reorderList(self, head: Optional[ListNode]) -> None:
- 
+
+        start = head
+        stack = []
+
         length = 0
-        start = head
-
-
-        while start != None:
+        
+        while start is not None:
+            stack.append(start)
+            start = start.next
             length += 1
-            start = start.next
-        
+
         start = head
-        for i in range(length//2):
-            start = start.next
-        
-        secondhalf = start.next
-        start.next = None
 
-        half = []
-        while secondhalf != None:
-            half.insert(0, secondhalf)
-            secondhalf = secondhalf.next
+        while start is not None and length/2 > 0:
+
+            temp = start.next
+            start.next = stack.pop()
+            start.next.next = temp
+            start = start.next.next
+
         
-        for item in half:
-            temp = head.next
-            head.next = item
-            item.next = temp
-            head = head.next.next
+
+
+
+
+
 
 
         
+
+        
+
         
