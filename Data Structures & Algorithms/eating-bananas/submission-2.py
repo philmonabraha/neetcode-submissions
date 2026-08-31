@@ -1,36 +1,36 @@
 import math
-
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
 
+        def canfinish(rate):
 
-        def check(rate):
+            time = h
 
-            hrs = h
+            for item in piles:
+                x = math.ceil(item/rate)
+                time -= x
 
-            for pile in piles:
-                current = math.ceil (pile / rate)
-                hrs = hrs - current
+            return time >= 0
 
-            if hrs >= 0:
-                return True
-            else:
-                return False
+        left, right = 1, max(piles)
 
-            #return true if we can finish eating the banana with this rate
-            #how to implement the algo?
+        while left <= right:
+            
+            mid = left + (right - left)//2 
 
-        
-        left, right = min(piles), max(piles)
-
-        while left < right:
-
-            mid = left + (right - left) // 2
-
-            if check(mid):
+            if canfinish(mid):
                 right = mid - 1
             else:
                 left = mid + 1
 
         return left
+            
+
+
+
+
+    
+
+        
+
         
