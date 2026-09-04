@@ -8,26 +8,31 @@ class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
 
         length = 0
+
         start = head
 
-        while start != None:
+        while start:
             length += 1
             start = start.next
-        
-        #handle edge cases, when removing from first when l == 0
-        l = length - n
-     
+
         start = head
 
-        if l == 0:
-            head = head.next
-            return
-            
-        for i in range(l):
+        if n == length:
+            return start.next
+        for i in range(length - n-1):
             start = start.next
         
-        if start.next == None or start.next.next == None:
-            start.next = None
+        if not start or not start.next:
+            temp = None
         else:
-            start.next = start.next.next
+            temp = start.next.next
+           
+        start.next = temp
 
+        return head
+        
+
+        
+
+
+        
