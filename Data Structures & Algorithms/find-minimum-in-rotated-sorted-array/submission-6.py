@@ -2,17 +2,20 @@ class Solution:
     def findMin(self, nums: List[int]) -> int:
 
 
-
         left, right = 0, len(nums) - 1
+   
+        while nums[right] < nums[left]:
 
-        while left != right:
+            mid = left + (right - left )//2
 
-            mid = left + (right - left) // 2
-
-            if nums[mid] > mid[left]:
+            if nums[mid] >= nums[left]:
                 left = mid + 1
             else:
-                right = mid 
-
+                right = mid -1 
+            
         return nums[left]
+
+
+
+
         

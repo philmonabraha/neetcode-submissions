@@ -2,31 +2,22 @@ class Solution:
     def search(self, nums: List[int], target: int) -> int:
 
 
-
-        left, right = 0 , len(nums) - 1
+        left = 0
+        right = len(nums) - 1
 
 
         while left < right:
 
-
-            mid = left + (right - left)//2
+            mid = left + (right - left) // 2
 
             if nums[mid] == target:
                 return mid
-
-            elif nums[mid] >= nums[left] and target in range(nums[left], nums[right]):
-                right = mid + 1
             
-            elif nums[mid] >= nums[left] and target not in range(nums[left], nums[right]):
-                left = mid
-
+            elif nums[left] < nums[mid] and target > nums[mid] and target < nums[left]:
+                left = mid + 1
+            
+            else:
+                right = mid
 
         return -1
-
-            
-
-
-
-
-        
         

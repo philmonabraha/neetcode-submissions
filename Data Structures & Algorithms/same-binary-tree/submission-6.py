@@ -9,39 +9,20 @@ class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
 
 
-        if not p and q:
-            return False
-        if not q and p:
-            return False
-        if not p and not q:
-            return True
+
+        same = True 
+
+        def helper(p, q):
+            if not p:
+                return True
+            if not q:
+                return True
+
+            self.isSameTree(p.left, q.left)
+            self.isSameTree(p.right, q.right)
+
+            same = same and p.val == q.val
 
         
-        queue1 = deque([p])
-        queue2 = deque([q])
-
-        while queue1 and queue2:
-
-            for i in range(len(queue1)):
-
-                node = queue1.popleft()
-                node2 = queue2.popleft()
-
-                if node == None and node2 == None:
-                    continue
-                if node == None or node2 == None or node.val != node2.val:
-                    return False
-
-
-                queue1.append(node.left)
-                
-                queue1.append(node.right)
-
-
-                queue2.append(node2.left)
-
-                queue2.append(node2.right)
-                
-        return True
-
+        helper(p, q)
         

@@ -2,27 +2,29 @@ class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
 
 
-        pair = []
+        stack = []
 
-        for i in range(len(position)):
-            pair.append([position[i], speed[i]])
+        res = 0
 
-        pair.sort(reverse = True)
+        res_set = ()
 
-        current = []
+        #how long it takes them to reach
+        #speed = distance / time. time = target - distance /speed
 
-        for item in pair:
 
-            distance = item[0]
-            s = item[1]
-            timetoreach = (target - distance)/s
+        for i in range(position):
 
-            if len(current) == 0 or timetoreach > current[-1]:
-                current.append(timetoreach)
+            time = ceil((target - distance) / speed)
+            res_set.add(time)
+        
+        return len(res_set)
 
-        return len(current)
 
             
+
+
+
+
 
 
         
