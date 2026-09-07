@@ -1,65 +1,52 @@
 class Tree:
 
-    def __init__(self, val = "", children = {}, stop = False):
+    def __init__(self, val = "", children = {}, end = False):
 
         self.val = val
-        self.children = children
-        self.false = False
+        self.children = {} 
+        self.end = end
+
 
 class PrefixTree:
 
     def __init__(self):
-
         self.tree = Tree()
-        self.dictionary = {}  
 
     def insert(self, word: str) -> None:
 
         pointer = self.tree
-
-        for i in range(len(word)):
-            w = word[i]
+        for w in word:
             if w not in pointer.children:
-                if i == len(word) - 1:
-                    pointer.children[w] = Tree(val=w, stop= True)
-                else:
-                    pointer.children[w] = Tree(val=w, stop= False)        
-            else:
-                if i == len(word) - 1:
-                    pointer.stop = True
+                node = Tree(val=w)
+                pointer.children[w] = node
 
             pointer = pointer.children[w]
+                
+        pointer.end = True
 
     def search(self, word: str) -> bool:
 
         pointer = self.tree
 
-        for i in range(len(word)):
-            w = word[i]
+        for w in word:
 
             if w not in pointer.children:
-                return False
-            else:
-                if i == len(word) - 1 and pointer.stop == True:
-                    return True
+                return False         
             pointer = pointer.children[w]
-        
-        return False
+
+        return pointer.end
+
 
     def startsWith(self, prefix: str) -> bool:
 
         pointer = self.tree
 
-        for i in range(len(word)):
-            w = word[i]
+        for w in prefix:
 
             if w not in pointer.children:
-                return False
-            else:
-                if i == len(word) - 1:
-                    return True
+                return False         
             pointer = pointer.children[w]
-        
-        return False
+
+        return True
         
         
