@@ -10,20 +10,21 @@ class Solution:
 
 
 
-        returnitem = []
-        def dfs(curr):
+        traversal = []
 
-            nonlocal returnitem
+        def dfs(node):
 
-            if not curr:
+            nonlocal traversal
+
+            if not node:
                 return
-            
-            dfs(curr.left)
-            returnitem.append(curr.val)
-            dfs(curr.right)
+
+            dfs(node.left)
+            traversal.append(node.val)
+            dfs(node.right)
 
         dfs(root)
+        return traversal[k-1]
 
-        return returnitem[k - 1]
 
         
