@@ -8,55 +8,25 @@
 class Solution:   
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
 
+        if not subRoot and not root:
+            return True
 
-        stack = []
-        found = False
-
-        while stack:
-
-            item = stack.pop()
-
-            if item == subroot:
-                found = True
-                break
-            
-            if item.left:
-                stack.append(item.left)
-            if item.right:
-                stack.append(item.right)
-
-        
-        if found == False:
+        if not subRoot or not root:
             return False
-        else:
 
-            res = set()
-
-            def dfs(root1, root2):
-
-                if not root1 or not root:
-                    return
-
-                nonlocal res
-
-                dfs(root1.left, root2.left)
-                dfs(root1.right, root2.right)
-
-                res.add(root1==root2)
-
-                return root1 == root2
-            
-            if False in res:
-                return False
+        node = root  
+        
+        while node:
+            if node.val > subRoot.val:
+                node = node.left
             else:
-                return True
+                node = node.right
 
+        while node and subRoot:
 
-                
-
-
-
-
+            if node.val != subRoot:
+                return False
+            return isSubtree(node.left, subRoot.left) and isSubtree(node.right, subRoot.right)
 
 
         

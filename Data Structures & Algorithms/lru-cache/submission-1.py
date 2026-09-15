@@ -1,73 +1,68 @@
-class ListNode:
+class List:
 
-    def __init__(self, val, nextitem, previtem):
+    def __init__(self, val, nextt = None, prev = None):
         self.val = val
-        self.nextitem = nextitem
-        self.previtem = previtem
+        self.nextt = nextt
+        self.prev = prev
 
 
 class LRUCache:
 
     def __init__(self, capacity: int):
 
-        self.dictionary = {}
-        self.capacity = capacity
+        self.hashmap = {}
+        self.head = List(val = 0)
+        self.tail = List(val = 0)
+        self.head.nextt = self.tail
+        self.tail.prev = self.head
         self.size = 0
-        self.node = ListNode(0,None, None)
-        self.head = self.node     
+        self.capcity = capacity
+        
 
-    def remove(current):
-            current.prev.next = current.next
-            current.next.prev = current.prev
-
-            self.node.next = current
-            current.prev = self.node
-            self.node = self.next
-
-    
     def get(self, key: int) -> int:
 
-        if key in self.dictionary:
-
-            node = self.dictionary[key]
-            self.remove(node)
-            return self.dictionary[key].val
-
+        if key in self.hashmap:
+            return self.hashmap[key]
         else:
+            retrun -1
 
-            return -1
 
     def put(self, key: int, value: int) -> None:
 
-        if self.size < self.capacity:
+        if self.size + 1 > self.capacity:
+            removefirst()
 
-            if key in self.dictionary:
-                self.dictionary[key].val = value
-                node = self.dictionary[key]
-                remove(node)
-            else:
-                self.dictionary[key] = ListNode(value, None, self.node)
-                self.node.next = self.dictionary[key]
-                self.size += 1
+        
+        if key in self.hashmap:
+            self.hashmap[key].val = value       
+            self.remove(self.hashmap[key])
+            self.stitch(self.hashmap[key])
 
         else:
-
-            temp = self.head
-            self.head = self.head.next
-            self.dictionary.remove(temp)
-            self.size -= 1
-
-
-            if key in self.dictionary:
-                self.dictionary[key].val = value
-                node = self.dictionary[key]
-                remove(node)
-            else:
-                self.dictionary[key] = ListNode(value, None, self.node)
-                self.node.next = self.dictionary[key]
-                self.size += 1
+            node = List(val=value)
+            #stich at the back
+            self.hashamp[key] = node
+            self.stitch(node)
 
 
-            
+    def removefirst(self):
+        temp = self.head.nexxt.nexxt 
+        self.head.nexxt = temp
+
+    def remove(node):
+        prev = node.prev
+        nextt = node.nextt
+        prev.nextt = nextt
+        nextt.prev = prev
+
+    def stich(node):
+        temp = self.tail.prev
+        temp.next = node
+        node.prev = temp
+        node.next = self.tail
+        self.tail.prev = node
+
+
+
 
         

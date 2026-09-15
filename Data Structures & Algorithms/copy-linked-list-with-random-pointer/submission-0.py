@@ -10,35 +10,27 @@ class Node:
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
 
+        dummy = Node(x=0)
+        res = dummy
 
-        start = head
-        
-        copied = Node(0)
-        c = copied
-        #return c.next
-
-        dictionary = {}
-
-        while start != None:
-
-            if start not in dictionary:           
-                dictionary[start] = Node(start.val)
-
-            copied.next = dictionary[start]
-            copied = copied.next
-            start = start.next
-
-        copied = c.next
+        hashmap = {}
         start = head
 
-        while start != None:
-
-            copied.random = dictionary[start]
+        while start:
+   
+            if start not in hashmap:
+                node = Node(x=start.val)
+                hashmap[start] = node
+                res.next = node       
+            else:
+                res.next = hashmap[start]
+            
+            if start.random not in hashmap:
+                hashmap[start.random] = Node(start.random.val)
+            
+            res.random = hashmap[start.random]          
+            res = res.next
             start = start.next
-            copied = copied.next
 
-        return c.next
-
-
-
+        return dummy.next
         

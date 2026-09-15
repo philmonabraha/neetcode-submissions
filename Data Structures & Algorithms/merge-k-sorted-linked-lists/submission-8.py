@@ -4,42 +4,23 @@
 #         self.val = val
 #         self.next = next
 
-class Solution:    
+class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-
-        
-        returnnode = ListNode()
-        head = returnnode
+        res = ListNode(0)
+        cur = res
 
         while True:
-
-            minindex = -1
-
+            minNode = -1
             for i in range(len(lists)):
-
-                l = lists[i]
-                if l == None:
+                if not lists[i]:
                     continue
+                if minNode == -1 or lists[minNode].val > lists[i].val:
+                    minNode = i
 
-                if minindex == -1 or l.val < lists[minindex].val:
-                    minindex = i
-
-
-            if minindex == -1:
+            if minNode == -1:
                 break
+            cur.next = lists[minNode]
+            lists[minNode] = lists[minNode].next
+            cur = cur.next
 
-            returnnode.next = lists[minindex]
-            returnnode = returnnode.next
-            lists[minindex] = lists[minindex].next
-
-
-        
-        return head.next
-            
-
-
-
-
-
-
-        
+        return res.next

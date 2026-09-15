@@ -1,51 +1,71 @@
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
 
-        pac, atl = set(), set()
+        pacific = set()
+        atlantic = set()
 
-        def dfs(r, c, visit, prevheight):
+        for i in range(len(heights)):
+            pacific.add(heights[i][0])
+        for i in range(len(heights[0])):
+            pacific.add(heights[0][i])
+        
+        for i in range(len(heights)):
+            atlantic.add(heights[i][len(heights)-1])
+        for i in range(len(heights[0])):
+            atlantic.add(heights[len(heights[0])-1][i])
 
-            if (r,c) in visit or r < 0 or c < 0 or r == rows or c == cols or heights[r][c] < prevheight:
+        #idea is to see if we can reach from the pacific corners to atlantic, and vice versa
+
+        #record the path along the way (essentially a successful path includes all )
+
+        directions = [[0,1],[0,-1],[1,0],[-1,0]]
+        
+        def dfs(r,c, visited, preval):
+
+            if r not in range(len(heights)) or r not in range(len(heights[0])) or heights[r][c] < preval:
                 return
+
+            visited.add((r,c))
+
+            dfs(r+1, c, visited, height[r][c])
+            dfs(r-1, c, visited, height[r][c])
+            dfs(r, c-1, visited, height[r][c])
+            dfs(r, c+1, visited, height[r][c])
+                    
+
+        res1 = set()
+
+        for item in pacific:
+            dfs(item[0], item[1], res1, heights[item[0]][item[1]])
+        res2 = set()
+        for item in atlantic:
+            dfs(item[0], item[1], res2, heights[item[0]][item[1]])
+
+        res = []
+
+        for item in res1:
+            if item in res2:
+                res.append(item)
+
+        return res
+
+
+
+                 
+
+
+
             
-            visit.add((r,c))
-            dfs(r-1, c, visit, heights[r][c])
-            dfs(r+1, c, visit, heights[r][c])
-            dfs(r, c-1, visit, heights[r][c])
-            dfs(r, c + 1, visit, heights[r][c])
-        
-        rows, cols = len(heights), len(heights[0])
-
-#pacific ocean
-#top
-        for r in range(1):
-            for c in range(cols):
-                dfs(r, c, pac, -1)
-#left
-        for r in range(rows):
-            for c in range(1):
-                dfs(r, c, pac, -1)           
-
-#atlantic ocean
-#bottom
-        for r in range(rows - 1, rows):
-            for c in range(cols):
-                dfs(r, c, atl, -1)
-#right
-        for r in range(rows):
-            for c in range(cols - 1, cols):
-                dfs(r, c, atl, -1)
-
-        result = []
-
-        for item in atl:
-            if item in pac:
-                result.append([item[0], item[1]])
-        
-        return result
 
 
 
 
-        
+
+
+
+
+
+
+
+
         

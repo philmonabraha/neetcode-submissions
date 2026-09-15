@@ -7,35 +7,30 @@
 class Solution:    
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
 
-        
-        returnnode = ListNode()
-        head = returnnode
+        dummy = ListNode() 
+        head = dummy
 
         while True:
+            
+            minimum_node = -1
 
-            minindex = -1
+            for j in range(len(lists)):
+                if not lists[j]:
+                    continue          
+                if minimum_node == -1 or lists[j].val < lists[minimum_node].val:
+                        minimum_node = j
 
-            for i in range(len(lists)):
-
-                l = lists[i]
-                if l == None:
-                    continue
-
-                if minindex == -1 and l.val < lists[minindex].val:
-                    minindex = i
-
-
-            if minindex == -1:
+            if minimum_node == -1:
                 break
 
-            returnnode.next = lists[minindex]
-            returnnode = returnnode.next
-            lists[minindex] = lists[minindex].next
-
-
-        
-        return head.next
+            dummy.next = lists[minimum_node]
+            lists[minimum_node] = lists[minimum_node].next
+            dummy = dummy.next
             
+        return head.next
+
+
+
 
 
 

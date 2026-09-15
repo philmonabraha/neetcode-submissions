@@ -1,36 +1,41 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
 
+         
 
-        preMap = {i: [] for i in range(numCourses)}
-        for crs, pre in prerequisites:
-            preMap[crs].append(pre)
+        pre_map = {}
 
-        visiting = set()
-
-        def dfs(crs):
-
-            if crs in visiting:
-                return False
-            if preMap[crs] == []:
-                return True
+        for item in prerequisites:
+            x = item[0]
+            y = item[1]
             
-            visiting.add(crs)
+            if x not in pre_map:
+                pre_map[x] = y
+            else:
+                premap[x].append(y)
 
-            for preq in preMap[crs]:
-                if not dfs(preq):
-                    return False
-            visiting.remove(crs)
-            preMap[crs] = []
-            return True
+        queue = deque()
+        for i in range(numCourses):
+            if i in pre_map:
+                queue.append(i)
+            
+        visited = set()
+        
+        while queue:
 
-        for c in range(numCourses):
-            if not dfs(c):
+            curr = queue.popleft()
+
+            if curr in visited:
                 return False
-        
-        return True
 
-        
+            for preq in pre_map[curr]:
+                queue.append(preq)
+            
+            visited.add(curr)
+
+        return True
+                
+
 
 
         

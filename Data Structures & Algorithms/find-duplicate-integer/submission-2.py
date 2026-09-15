@@ -4,11 +4,9 @@ class Solution:
 
         for i in range(len(nums)):
 
-            if nums[abs(nums[i])-1] < 0:
-                return nums[i]
+            if nums[nums[i]-1] < 0:
+                return i
+
+            curr = nums[i] - 1
+            nums[curr] = -1*nums[curr]
         
-            nums[nums[i-1]] *= -1
-
-
-
-        return 0

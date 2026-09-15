@@ -11,26 +11,24 @@ class Solution:
 
         if not node:
             return None
-       
-        queue1 = deque([node])
-        root = Node(node.val)
-        queue2 = deque([root])
 
-        while queue1:
+        tree = Node(node.val)
 
-            for i in range(len(queue)):
+        node_to_new = {node:tree}
 
-                curr = queue1.popleft()
-                copy = queue2.popleft()
+        queue = deque(tree)
 
-                for x in curr.neighbors:
-                    queue1.append(x)
-                    x_copy = Node(x.val)
-                    copy.neighbors.append(x_copy)
-                    queue2.append(x_copy)
+        while queue:
 
-        return root
+            curr = queue.popleft()
 
+            for nei in curr.neighbors:
+                if nei not in node_to_new:
+                    node_to_new[nei] = Node(nei.val)
 
+                node_to_new[curr].neighbors.append(node_to_new[nei])
+                queue.append(nei)
+
+        return tree
 
         

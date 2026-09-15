@@ -8,31 +8,29 @@
 class Solution:   
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
 
+        node = root  
 
+        while node:
+            if node == subRoot:
+                return issametree(root, subroot)
+            if node.val > subRoot.val:
+                node = node.left
+            else:
+                node = node.right
+        return False
+        
+    def issametree(node1, node2):
 
-        def dfs(root1, root2):
+        if not node1 and not node2:
+            return True
 
-                if not root1 and not root2:
-                    return True
-                if not root1 or not root2:
-                    return False
-
-                return root1 == root2 and dfs(root1.left, root2.left) and dfs(root1.right, root2.right)
-            
-
-        if not root:
+        if not node1 or not node2:
+            return False
+        
+        if node1.val != node2.val:
             return False
 
-        if dfs(root, subRoot):
-            return True 
-
-        return dfs(root.left, subRoot) or dfs(root.right, subRoot)
-
-                
-
-
-
-
+        return issametree(node.left, subRoot.left) and issametree(node.right, subRoot.right)
 
 
         

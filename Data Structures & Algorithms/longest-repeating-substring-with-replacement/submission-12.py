@@ -1,0 +1,32 @@
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+
+        freq = {}
+
+        left, right = 0, 0
+
+        res = 0
+
+        while right < len(s) - 1:
+
+            items = s[right]
+            if items not in freq:
+                freq[items] =  1
+            else:
+                freq[items] += 1
+    
+            while sum(freq.values()) - max(freq.values()) > k:              
+                freq[s[left]] -= 1
+                left += 1
+
+            res = max(right - left, res)
+            right += 1
+            
+
+        return res
+            
+                
+        
+        
+        
+        

@@ -1,58 +1,66 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
 
-        rows = len(grid)
-        cols = len(grid[0])
 
-        queue = deque()
 
-        for i in range(rows):
-            for j in range(cols):
-                if grid[i][j] == 2:
-                    queue.append((i,j))
-
+        directions = [[0,1],[0,-1],[1,0],[-1,0]]
         visited = set()
-        directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
 
-        miniute = -1
-        
-        while queue:
+        rotten = 0
 
-            for w in range(len(queue)):
+        def bfs(lists):
+
+            nonlocal rotten
+
+            queue = deque()
+
+            for item in lists:
+                queue.append(item)
+            minute = 0
+            while queue:
+
+                for i in range(len(queue)):             
+                    curr = queue.popleft()
+                    rotten += 1                
+                    for direc in directions:
+                        x, y = curr[0] + direc[0], curr[1] + direc[1]
+
+                        if x in range(len(grid)) and y in range(len(grid[0])) and grid[x][y] == 1 and (x,y) not in visited:
+
+                            queue.append([x,y])
+                            visited.add((x,y))
+                            
                 
-                x, y = queue.popleft()
-                
-                for direc in directions:
-                    i = x + direc[0]
-                    j = y + direc[1]
+                minute += 1
 
-                    if i in range(rows) and j in range(cols) and (i, j) not in visited and grid[i][j] == 1:
-                        queue.append((i,j))
-                        visited.add((i,j))
-                        grid[i][j] = 2
-            
-            miniute += 1
+            return minute
 
-        impossible = False
+        initial_rotten = []
+        total = 0
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] == 1 or grid[r][c] == 2:
+                    total += 1
+                if grid[r][c] == 2:
+                    initial_rotten.append([r,c])
 
-        for i in range(rows):
-            for j in range(cols):
-                if grid[i][j] == 1:
-                    impossible = True
+        res = bfs(initial_rotten)
 
-        if impossible:
+        if total != rotten:
             return -1
         else:
-            return max(miniute, 0) 
+            return res
+            
+
+
+
+
+
 
         
 
-        
 
 
-
-
-        
 
 
 
