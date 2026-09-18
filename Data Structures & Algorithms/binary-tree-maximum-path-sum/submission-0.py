@@ -8,26 +8,27 @@
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
 
-        res = 0
+        maximum = 0
 
-        def dfs(curr):
+        def dfs(root, sum):
 
-            nonlocal res
+            nonlocal maximum
 
-            if not curr:
-                return 0
+            if not root:
+                return 
 
-            
-            left = dfs(curr.left)
-            right = dfs(curr.right)
+            maximum = max(maximum, maximum+root.val)
 
-            res = max(res, left+right)
+            if root.val < 0:
+                sum = 0
+            else:
+                sum = sum + root.val
 
-            return curr.val + max(left, right)
+            dfs(root.left, sum)
+            dfs(root.right, sum)
 
-        dfs(root)
+        dfs(root, 0)
 
-        return res
-
+        return maximum
 
         
