@@ -20,10 +20,7 @@ class Solution:
 
             for nei in tree[i]:
                 if not dfs(nei):
-                    return False 
-
-            return True  
-        
+                    return False   
         dfs(0)
 
         return len(visited) == n

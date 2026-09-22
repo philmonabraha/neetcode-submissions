@@ -4,7 +4,7 @@ class Solution:
         min_until = []
         maximum = 0
         
-        for i in range(1,len(heights)-1):
+        for i in range(len(heights)):
 
             left = i-1
             right = i + 1
@@ -14,7 +14,7 @@ class Solution:
             while right < len(heights) and heights[right] >= heights[i]:
                 right += 1
 
-            curr = (right - left ) * heights[i]
+            curr = (right - left - 1) * heights[i]
             maximum = max(maximum, curr)
 
         return maximum

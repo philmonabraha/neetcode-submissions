@@ -8,33 +8,42 @@ class Solution:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
 
 
-        
-        
-        prev = None
-
         start = head
+        end = head
 
-        while head != None:
+        #need to account for when end fewer than k nodes left
 
-            tail = head
-            curr = tail         
+        #global head
+        global_head = start
 
-            index = k
+        for i in range(k):
+            global_head = global_head.next
+     
+        while end:
 
-            while curr and index > 0:
+            few_nodes = False
 
-                next_node = curr.next
-                curr.next = prev
-                prev = curr
-                curr = next_node
+            for i in range(k):
+                if not end:
+                    few_nodes = True
+                    break           
+                end = end.next
+            
+            if few_nodes:
+                break
+            
+            initial = start
 
-            prev = tail
-            head = tail.next
+            while start != end:
+                temp = start.next
+                temp.next = start
+                start = temp
+            
+            initial.next = end.next
+            start = initial.next
+            end = start
 
-        return start
-                
-
-
+        return global_head
 
 
         

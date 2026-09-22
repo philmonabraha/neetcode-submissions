@@ -1,33 +1,35 @@
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
-    
-        if not n:
-            return
 
-        adj = {i:[] for i in range(n)}
-        for u, v in edges:
-            adj[u].append(v)
-            adj[v].append(u)
+        if len(edges) != n-1:
+            return False
+       
+        tree = {i:[] for i in range(n)}
 
-        visit = set()
+        for v,e in edges:
+            tree[v].append(e)
 
-        def dfs(node, prev):
+        visited = set()
 
-            if node in visit:
+        def dfs(i):
+
+            if tree[i] == []:
+                return True
+
+            if i in visited:
                 return False
+
+            visited.add(i)
+
+            for nei in tree[i]:
+                if not dfs(nei):
+                    return False 
+
+            return True  
         
-            visit.add(node)
-            for nei in adj[node]:
+        dfs(0)
 
-                if nei == prev:
-                    continue
-                if not dfs(nei, node):
-                    return False
-            return True
-   
-        return dfs(0, -1) and len(visit) == n
+        return len(visited) == n
 
+            
 
-
-
-        

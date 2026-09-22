@@ -25,10 +25,10 @@ class Solution:
         for i in range(n):
 
             dfs(i)
-            if len(s) != prev:
+            if len(s) > prev:
                 prev = len(s)
                 count += 1
-
+                
         return count
 
         

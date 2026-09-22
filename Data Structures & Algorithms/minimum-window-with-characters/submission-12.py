@@ -1,61 +1,46 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-      
+
+        t_map = {}
+        for i in t:
+            if i not in t_map:
+                t_map[i] = 1
+            else:
+                t_map[i] += 1
+
         
         left, right = 0, 0
+        need = len(t)
+        have = 0
 
-        target = {}
+        res = ""
 
-        for i in t:
-
-            if i in target:
-                target[i] += 1
-            else:
-                target[i] = 1
-
-        have, need = 0, len(target)
-        res = [-1,-1]
-        reslen = float("infinity")
-
-        window = {}
+        s_map = {}
 
         while right < len(s):
 
-            c = s[right]
-            if c in window:
-                window[c] +=1
+            if s[right] not in s_map:
+                s_map[s[right]] = 1
             else:
-                window[c]
+                s_map[s[right]] += 1
 
-            if c in target and target[c] == window[c]:
-                have +=1
+            if s[right] in t_map and s_map[s[right]] == t_map[s[right]]:
+                have += 1
 
-            while have == need:
+            while need == have:
                 
-                if (right - left + 1) < reslen:
-                    res = [left, right]
-                    reslen = right - left + 1
+                if res == "" or right - left + 1 < len(res):
+                    res = s[left: right+ 1]
+                
+                s_map[s[left]] -= 1
 
-                window[s[l]] -= 1
-
-                if s[l] in target and target[s[l]] != window[s[l]]:
+                if s_map[s[right]] < t_map[s[right]]:
                     have -= 1
-                
-                left +=1 
-
-        if reslen == float("infinity"):
-            return ""
         
-        return s[res[0]:res[1]+1]
+                left += 1
 
+            right += 1
 
-
-            
-                
-            
-
-
-
-
+        return res
 
         

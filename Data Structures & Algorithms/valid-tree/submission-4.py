@@ -8,10 +8,14 @@ class Solution:
 
         for v,e in edges:
             tree[v].append(e)
+            tree[e].append(v)
 
         visited = set()
 
         def dfs(i):
+
+            if tree[i] == []:
+                return True
 
             if i in visited:
                 return False

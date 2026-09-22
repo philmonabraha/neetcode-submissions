@@ -1,50 +1,39 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
 
-        dictionary = {}
-
-        returnstring = ""
-
+        t_map = {}
         for i in t:
-            if i in dictionary:
-                dictionary[i] += 1
+            if i not in t_map:
+                t_map[i] = 1
             else:
-                dictionary[i] = 1
-            
-        dictionary_copy = dictionary
+                t_map[i] += 1
 
+        
+        left, right = 0, 0
 
-        left, right = 0, len(s) - 1
+        res = ""
 
-        while left < right:
+        s_map = {}
 
+        while right < len(s):
 
-            dictionary_copy = dictionary
+            all_items_present = True
+            for i in t_maps:
+                if i not in t_maps or t_maps[i] < s_map[i]:
+                    all_items_present = False
 
-            while dictionary_copy != {} and left < right and right < len(s):
+            while all_items_present:
 
-                if s[right] in dictionary:
-                    dictionary[s[right]] = dictionary[s[right]] - 1
+                res = s[left: right+ 1]
+                s_map[left] -= 1
+                left += 1
 
-                    if dictionary[s[right]] == 0:
-                        del dictionary[s[right]]               
-                
-                right += 1
+            if right not in s_map:
+                s_map[right] = 1
+            else:
+                s_map[right] += 1
+            right += 1
 
-            if dictionary_copy == {} and len(right-left) > len(returnstring):
-                returnstring = s[left:right+1]
-
-            left += 1
-
-        return returnstring
-
-
-
-
-
-
-
-
-
+        return res
 
         
