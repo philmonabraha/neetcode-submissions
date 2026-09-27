@@ -1,49 +1,66 @@
-class TrieNode:
+class TrieNode():
+
     def __init__(self):
         self.children = {}
-        self.isWord = False
+        self.isword = False
 
-    def addWord(self, word):
-        cur = self
-        for c in word:
-            if c not in cur.children:
-                cur.children[c] = TrieNode()
-            cur = cur.children[c]
-        cur.isWord = True
+    def addword(self, word):
+        curr = self
 
+        for i in range(len(word)):
+            letter = word[i]
+            if letter not in curr.children:
+                curr.children[letter] = TrieNode()
+            curr = curr.children[letter]
+            if i == len(word) - 1:
+                curr.isword = True
 
 class Solution:
-
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
 
-        root = TrieNode()
-        for w in words:
-            root.addWord(w)
+        trie = TrieNode()
+        for word in words:
+            trie.addword(word)
 
-        rows, cols = len(board), len(board[0])
-        res, visit = set(), set()
+        visit = set()
+        res = set()
 
-        def dfs(r, c, node, word):
+        def dfs(r, c, node, wordsofar):
 
-            if r < 0 or c < 0 or r >= rows or c >= cols or board[r][c] not in node.children:
+            if r not in range(len(board)) or c not in range(len(board[0])) or (r,c ) in visit or board[r][c] not in node.children:
                 return
-            
+
             visit.add((r,c))
             node = node.children[board[r][c]]
-            word += board[r][c]
+            wordsofar += board[r][c]
 
-            if node.isWord:
-                res.add(word)
+            if node.isword:
+                res.add(wordsofar)
 
-            dfs(r + 1, c, node, word)
-            dfs(r - 1, c, node, word)
-            dfs(r, c + 1, node, word)
-            dfs(r, c - 1, node, word)
-            visit.remove((r, c))
+            dfs(r+1, c, node, wordsofar)
+            dfs(r-1, c, node, wordsofar)
+            dfs(r, c+1, node, wordsofar)
+            dfs(r, c-1, node, wordsofar)
 
-        for r in range(rows):
-            for c in range(cols):
-                dfs(r, c, root, "")
+            visit.remove((r,c))
+
+        rows, cols = len(board), len(board[0])
+        
+        for i in range(rows):
+            for j in range(cols):
+                dfs(i, j, trie, "")
 
         return list(res)
+
+
+
+
+
+        
+
+
+        
+
+
+
         
